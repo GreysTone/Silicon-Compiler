@@ -23,4 +23,3 @@ $(cpptargets): %: %.lex
 
 clean:
 	$(rm) $(targets) $(cpptargets)
-
