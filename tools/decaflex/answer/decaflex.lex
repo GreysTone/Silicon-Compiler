@@ -1,3 +1,21 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// decaflex.lex
+//
+// Silicon Compiler
+//
+// Project          : Silicon_Compiler
+// Author           : Danyang Song (Arthur) Handle: GreysTone
+// Contact          : arthur_song@sfu.ca
+// Student ID       : 301295765, dsa65
+// Instructor       : Anoop Sarkar
+//
+// Created by GreysTone on 2016-05-26.
+// Copyright (c) 2016 GreysTone. All rights reserved.
+// Last Modified on 2016-05-26 by Danyang Song (Arthur), arthur_song@sfu.ca
+// Modified         : Reformat tokens into global.h
+//
+//////////////////////////////////////////////////////////////////////////////
 
 %{
 
@@ -10,11 +28,11 @@ using namespace GT_SILICON_COMPILER;
 
 %}
 
-/* Regexp definitions */
+// RegExp definitions (LEX)
 num [0-9]+
 
+// Pattern definitions for all tokens (LEX)
 %%
-  /* Pattern definitions for all tokens */
 func                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_FUNC; }
 int                        { return (std::int32_t)GT_LEXICAL_TOKEN::T_INTTYPE; }
 package                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
@@ -29,7 +47,18 @@ package                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
 .                          { cerr << "Error: unexpected character in input" << endl; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
 %%
 
-int main () {
+//
+// Function: main
+// ---------------------------
+//
+//   Main entrance,
+//
+//   Parameters:
+//       argc:  the number of parameters from CLI
+//       argv:  the pointer of parameters from CLI
+//
+int
+main (int argc, char **argv) {
   std::int32_t token;
   string lexeme;
 

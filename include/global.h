@@ -12,6 +12,8 @@
 //
 // Created by GreysTone on 2016-05-19.
 // Copyright (c) 2016 GreysTone. All rights reserved.
+// Last Modified on 2016-05-26 by Danyang Song (Arthur), arthur_song@sfu.ca
+// Modified         : Enumerate necessary tokens
 //
 //////////////////////////////////////////////////////////////////////////////
 
