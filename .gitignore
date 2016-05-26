@@ -1,2 +1,8 @@
 # IDE configuration 
 .idea
+
+# Python Byte
+.pyc
+
+# Temporary Upload
+.zip
