@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////
+/*////////////////////////////////////////////////////////////////////////////
 //
 // decaflex.lex
 //
@@ -12,10 +12,10 @@
 //
 // Created by GreysTone on 2016-05-26.
 // Copyright (c) 2016 GreysTone. All rights reserved.
-// Last Modified on 2016-05-26 by Danyang Song (Arthur), arthur_song@sfu.ca
-// Modified         : Reformat tokens into global.h
+// Last Modified on 2016-05-27 by Danyang Song (Arthur), arthur_song@sfu.ca
+// Modified         : Added preserved keywords, modified comments style to support compile .lex
 //
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////*/
 
 %{
 
@@ -28,14 +28,29 @@ using namespace GT_SILICON_COMPILER;
 
 %}
 
-// RegExp definitions (LEX)
+/* RegExp definitions (LEX) */
 num [0-9]+
 
-// Pattern definitions for all tokens (LEX)
+/* Pattern definitions for all tokens (LEX) */
 %%
+bool                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_BOOLTYPE; }
+break                      { return (std::int32_t)GT_LEXICAL_TOKEN::T_BREAK; }
+continue                   { return (std::int32_t)GT_LEXICAL_TOKEN::T_CONTINUE; }
+else                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_ELSE; }
+extern                     { return (std::int32_t)GT_LEXICAL_TOKEN::T_EXTERN; }
+false                      { return (std::int32_t)GT_LEXICAL_TOKEN::T_FALSE; }
+for                        { return (std::int32_t)GT_LEXICAL_TOKEN::T_FOR; }
 func                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_FUNC; }
+if                         { return (std::int32_t)GT_LEXICAL_TOKEN::T_IF; }
 int                        { return (std::int32_t)GT_LEXICAL_TOKEN::T_INTTYPE; }
+null                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_NULL; }
 package                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
+return                     { return (std::int32_t)GT_LEXICAL_TOKEN::T_RETURN; }
+string                     { return (std::int32_t)GT_LEXICAL_TOKEN::T_STRINGTYPE; }
+true                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_TRUE; }
+var                        { return (std::int32_t)GT_LEXICAL_TOKEN::T_VAR; }
+void                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_VOID; }
+while                      { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHILE; }
 \{                         { return (std::int32_t)GT_LEXICAL_TOKEN::T_LCB; }
 \}                         { return (std::int32_t)GT_LEXICAL_TOKEN::T_RCB; }
 \(                         { return (std::int32_t)GT_LEXICAL_TOKEN::T_LPAREN; }
@@ -47,7 +62,7 @@ package                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
 .                          { cerr << "Error: unexpected character in input" << endl; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
 %%
 
-//
+/*
 // Function: main
 // ---------------------------
 //
@@ -56,7 +71,7 @@ package                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
 //   Parameters:
 //       argc:  the number of parameters from CLI
 //       argv:  the pointer of parameters from CLI
-//
+*/
 int
 main (int argc, char **argv) {
   std::int32_t token;
