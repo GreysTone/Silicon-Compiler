@@ -15,6 +15,8 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
+#include "lexical_analyser.h"
+
 //
 // Function: main
 // ---------------------------
@@ -26,5 +28,8 @@
 //       argv:  the pointer of parameters from CLI
 //
 int main (int argc, char **argv) {
+  LexicalAnalyser analyser;
+  analyser.analyse();
 
+  return 0;
 }

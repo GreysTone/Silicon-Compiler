@@ -16,3 +16,11 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #include "lexical_analyser.h"
+
+LexicalAnalyser::LexicalAnalyser() {
+
+}
+
+void LexicalAnalyser::analyse() {
+
+}

@@ -27,12 +27,15 @@
 //   Lexical Analyser
 //
 //   Usage:
-//
-//
+//       LexicalAnalyser analyser;
+//       analyser.analyse();
 //
 
 class LexicalAnalyser {
+public:
+  LexicalAnalyser();
 
+  void analyse();
 };
 
 #endif //SILICON_COMPILER_LEXICAL_ANALYSER_H
