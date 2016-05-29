@@ -33,11 +33,11 @@ using namespace GT_SILICON_COMPILER;
 /* RegExp definitions (LEX) */
 digit       [0-9]
 letter      [a-zA-Z\_]
-hexDigit    [a-fA-F{digit}]
+hexDigit    [a-fA-F0-9]
 allChar     [\x7-\xd\x20-\x7e]
 normChar    [\x7-\xd\x20-\x5b\x5d-\x7e]
 noNlChar    [\x7-\x9\xb-\xd\x20-\x7e]
-noSglChar   [\x7-\xd\x20-\x26\x28-\x5b\x5d-\x7e]
+noSglChar   [\x7-\x9\xb-\xd\x20-\x26\x28-\x5b\x5d-\x7e]
 noDblChar   [\x7-\x9\xb-\xd\x20\x21\x23-\x5b\x5d-\x7e]
 
 comment     \/\/{noNlChar}*\n
@@ -49,8 +49,8 @@ identifier  {letter}({letter}|{digit})*
 
 dec_lit     {digit}+
 hex_lit     0[xX]{hexDigit}+
-int_lit     {dec_lit}|{hex_lit}
-escaped     \\[nrtvfab\\\'\"]
+int_lit     ({hex_lit}|{dec_lit})
+escaped     \\[nrtvfab\\'\"]
 char_lit    '({noSglChar}|{escaped})'
 string_lit  \"({noDblChar}|{escaped})*\"
 
