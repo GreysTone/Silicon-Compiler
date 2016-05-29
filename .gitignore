@@ -2,7 +2,7 @@
 .idea
 
 # Python Byte
-.pyc
+*.pyc
 
 # Temporary Upload
-.zip
+*.zip
