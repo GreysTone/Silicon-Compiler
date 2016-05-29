@@ -19,7 +19,7 @@
 
 %{
 
-#include "../../../include/global.h"
+#include "global.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -29,7 +29,8 @@ using namespace GT_SILICON_COMPILER;
 %}
 
 /* RegExp definitions (LEX) */
-num [0-9]+
+digit [0-9]+
+
 
 /* Pattern definitions for all tokens (LEX) */
 %%
@@ -80,22 +81,23 @@ main (int argc, char **argv) {
   while ((token = yylex())) {
     if (token != (std::int32_t)0xA200) {
       lexeme.assign(yytext);
-	  switch(token) {
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_FUNC:    cout << "T_FUNC " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_INTTYPE: cout << "T_INT " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE: cout << "T_PACKAGE " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_LCB: cout << "T_LCB " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_RCB: cout << "T_RCB " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_LPAREN: cout << "T_LPAREN " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_RPAREN: cout << "T_RPAREN " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_IDENTIFIER: cout << "T_ID " << lexeme << endl; break;
-		case (std::int32_t)GT_LEXICAL_TOKEN::T_WHITESPACE: cout << "T_WHITESPACE " << lexeme << endl; break;
-		case (std::int32_t)10: cout << "T_WHITESPACE \\n" << endl; break;
-		default: exit(EXIT_FAILURE);
-	  }
+      switch(token) {
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_FUNC:    cout << "T_FUNC " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_INTTYPE: cout << "T_INT " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE: cout << "T_PACKAGE " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_LCB: cout << "T_LCB " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_RCB: cout << "T_RCB " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_LPAREN: cout << "T_LPAREN " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_RPAREN: cout << "T_RPAREN " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_IDENTIFIER: cout << "T_ID " << lexeme << endl; break;
+        case (std::int32_t)GT_LEXICAL_TOKEN::T_WHITESPACE: cout << "T_WHITESPACE " << lexeme << endl; break;
+        case (std::int32_t)10: cout << "T_WHITESPACE \\n" << endl; break;
+        default: exit(EXIT_FAILURE);
+      }
     } else {
       exit(EXIT_FAILURE);
     }
   }
+
   exit(EXIT_SUCCESS);
 }
