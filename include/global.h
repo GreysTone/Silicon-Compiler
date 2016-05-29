@@ -35,27 +35,27 @@ enum class GT_LEXICAL_TOKEN : std::int32_t {
   T_SEMICOLON      = ';',
 
   // Operator
-  T_AND            = 0xA201, // &&
   T_ASSIGN         = '=',
   T_DIV            = '/',
   T_DOT            = '.',
-  T_EQ             = 0xA202, // ==
-  T_GEQ            = 0xA203, // >=
   T_GT             = '>',
-  T_LEFTSHIFT      = 0xA204, // <<
-  T_LEQ            = 0xA205, // <=
   T_LT             = '<',
   T_MINUS          = '-',
   T_MOD            = '%',
   T_MULT           = '*',
-  T_NEQ            = 0xA206, // !=
   T_NOT            = '!',
-  T_OR             = 0xA207, // ||
   T_PLUS           = '+',
-  T_RIGHTSHIFT     = 0xA208, // >>
+  T_AND            = 0x7201, // &&
+  T_EQ                     , // ==
+  T_GEQ                    , // >=
+  T_LEFTSHIFT              , // <<
+  T_LEQ                    , // <=
+  T_NEQ                    , // !=
+  T_OR                     , // ||
+  T_RIGHTSHIFT             , // >>
 
   // Preserved Keyword
-  T_BOOLTYPE       = 0xA209, // bool
+  T_BOOLTYPE               , // bool
   T_BREAK                  , // break
   T_CONTINUE               , // continue
   T_ELSE                   , // else
