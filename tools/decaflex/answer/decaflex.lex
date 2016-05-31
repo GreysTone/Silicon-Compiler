@@ -56,64 +56,64 @@ string_lit  \"({noDblChar}|{escaped})*\"
 
 /* Pattern definitions for all tokens (LEX) */
 %%
-{string_lit}                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_STRINGCONSTANT; }
-{char_lit}                      { return (std::int32_t)GT_LEXICAL_TOKEN::T_CHARCONSTANT; }
-{int_lit}                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_INTCONSTANT; }
+{string_lit}     { return (std::int32_t)GT_LEXICAL_TOKEN::T_STRINGCONSTANT; }
+{char_lit}       { return (std::int32_t)GT_LEXICAL_TOKEN::T_CHARCONSTANT; }
+{int_lit}        { return (std::int32_t)GT_LEXICAL_TOKEN::T_INTCONSTANT; }
 
-,                               { return (std::int32_t)GT_LEXICAL_TOKEN::T_COMMA; }
-\{                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_LCB; }
-\(                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_LPAREN; }
-\[                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_LSB; }
-\}                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_RCB; }
-\)                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_RPAREN; }
-\]                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_RSB; }
-\;                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_SEMICOLON; }
+,                { return (std::int32_t)GT_LEXICAL_TOKEN::T_COMMA; }
+\{               { return (std::int32_t)GT_LEXICAL_TOKEN::T_LCB; }
+\(               { return (std::int32_t)GT_LEXICAL_TOKEN::T_LPAREN; }
+\[               { return (std::int32_t)GT_LEXICAL_TOKEN::T_LSB; }
+\}               { return (std::int32_t)GT_LEXICAL_TOKEN::T_RCB; }
+\)               { return (std::int32_t)GT_LEXICAL_TOKEN::T_RPAREN; }
+\]               { return (std::int32_t)GT_LEXICAL_TOKEN::T_RSB; }
+\;               { return (std::int32_t)GT_LEXICAL_TOKEN::T_SEMICOLON; }
 
-=                               { return (std::int32_t)GT_LEXICAL_TOKEN::T_ASSIGN; }
-\/                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_DIV; }
-\.                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_DOT; }
-\>                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_GT; }
-\<                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_LT; }
--                               { return (std::int32_t)GT_LEXICAL_TOKEN::T_MINUS; }
-%                               { return (std::int32_t)GT_LEXICAL_TOKEN::T_MOD; }
-\*                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_MULT; }
-!                               { return (std::int32_t)GT_LEXICAL_TOKEN::T_NOT; }
-\+                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_PLUS; }
-&&                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_AND; }
-==                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_EQ; }
-\>=                             { return (std::int32_t)GT_LEXICAL_TOKEN::T_GEQ; }
-\<\<                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_LEFTSHIFT; }
-\<=                             { return (std::int32_t)GT_LEXICAL_TOKEN::T_LEQ; }
-!=                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_NEQ; }
-\|\|                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_OR; }
-\>\>                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_RIGHTSHIFT; }
+=                { return (std::int32_t)GT_LEXICAL_TOKEN::T_ASSIGN; }
+\/               { return (std::int32_t)GT_LEXICAL_TOKEN::T_DIV; }
+\.               { return (std::int32_t)GT_LEXICAL_TOKEN::T_DOT; }
+\>               { return (std::int32_t)GT_LEXICAL_TOKEN::T_GT; }
+\<               { return (std::int32_t)GT_LEXICAL_TOKEN::T_LT; }
+-                { return (std::int32_t)GT_LEXICAL_TOKEN::T_MINUS; }
+%                { return (std::int32_t)GT_LEXICAL_TOKEN::T_MOD; }
+\*               { return (std::int32_t)GT_LEXICAL_TOKEN::T_MULT; }
+!                { return (std::int32_t)GT_LEXICAL_TOKEN::T_NOT; }
+\+               { return (std::int32_t)GT_LEXICAL_TOKEN::T_PLUS; }
+&&               { return (std::int32_t)GT_LEXICAL_TOKEN::T_AND; }
+==               { return (std::int32_t)GT_LEXICAL_TOKEN::T_EQ; }
+\>=              { return (std::int32_t)GT_LEXICAL_TOKEN::T_GEQ; }
+\<\<             { return (std::int32_t)GT_LEXICAL_TOKEN::T_LEFTSHIFT; }
+\<=              { return (std::int32_t)GT_LEXICAL_TOKEN::T_LEQ; }
+!=               { return (std::int32_t)GT_LEXICAL_TOKEN::T_NEQ; }
+\|\|             { return (std::int32_t)GT_LEXICAL_TOKEN::T_OR; }
+\>\>             { return (std::int32_t)GT_LEXICAL_TOKEN::T_RIGHTSHIFT; }
 
-bool                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_BOOLTYPE; }
-break                           { return (std::int32_t)GT_LEXICAL_TOKEN::T_BREAK; }
-continue                        { return (std::int32_t)GT_LEXICAL_TOKEN::T_CONTINUE; }
-else                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_ELSE; }
-extern                          { return (std::int32_t)GT_LEXICAL_TOKEN::T_EXTERN; }
-false                           { return (std::int32_t)GT_LEXICAL_TOKEN::T_FALSE; }
-for                             { return (std::int32_t)GT_LEXICAL_TOKEN::T_FOR; }
-func                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_FUNC; }
-if                              { return (std::int32_t)GT_LEXICAL_TOKEN::T_IF; }
-int                             { return (std::int32_t)GT_LEXICAL_TOKEN::T_INTTYPE; }
-null                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_NULL; }
-package                         { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
-return                          { return (std::int32_t)GT_LEXICAL_TOKEN::T_RETURN; }
-string                          { return (std::int32_t)GT_LEXICAL_TOKEN::T_STRINGTYPE; }
-true                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_TRUE; }
-var                             { return (std::int32_t)GT_LEXICAL_TOKEN::T_VAR; }
-void                            { return (std::int32_t)GT_LEXICAL_TOKEN::T_VOID; }
-while                           { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHILE; }
+bool             { return (std::int32_t)GT_LEXICAL_TOKEN::T_BOOLTYPE; }
+break            { return (std::int32_t)GT_LEXICAL_TOKEN::T_BREAK; }
+continue         { return (std::int32_t)GT_LEXICAL_TOKEN::T_CONTINUE; }
+else             { return (std::int32_t)GT_LEXICAL_TOKEN::T_ELSE; }
+extern           { return (std::int32_t)GT_LEXICAL_TOKEN::T_EXTERN; }
+false            { return (std::int32_t)GT_LEXICAL_TOKEN::T_FALSE; }
+for              { return (std::int32_t)GT_LEXICAL_TOKEN::T_FOR; }
+func             { return (std::int32_t)GT_LEXICAL_TOKEN::T_FUNC; }
+if               { return (std::int32_t)GT_LEXICAL_TOKEN::T_IF; }
+int              { return (std::int32_t)GT_LEXICAL_TOKEN::T_INTTYPE; }
+null             { return (std::int32_t)GT_LEXICAL_TOKEN::T_NULL; }
+package          { return (std::int32_t)GT_LEXICAL_TOKEN::T_PACKAGE; }
+return           { return (std::int32_t)GT_LEXICAL_TOKEN::T_RETURN; }
+string           { return (std::int32_t)GT_LEXICAL_TOKEN::T_STRINGTYPE; }
+true             { return (std::int32_t)GT_LEXICAL_TOKEN::T_TRUE; }
+var              { return (std::int32_t)GT_LEXICAL_TOKEN::T_VAR; }
+void             { return (std::int32_t)GT_LEXICAL_TOKEN::T_VOID; }
+while            { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHILE; }
 
-{identifier}                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_IDENTIFIER; }
-{whitespace}                    { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHITESPACE; }
-{comment}                       { return (std::int32_t)GT_LEXICAL_TOKEN::T_COMMENT; }
-.                               { return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{identifier}     { return (std::int32_t)GT_LEXICAL_TOKEN::T_IDENTIFIER; }
+{whitespace}     { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHITESPACE; }
+{comment}        { return (std::int32_t)GT_LEXICAL_TOKEN::T_COMMENT; }
+.                { return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
 %%
 
-/* \n                         { return 10; } */
+/* \n          { return 10; } */
 /* adds description string for output */
 map<GT_LEXICAL_TOKEN, string> tokenString;
 /*tokenString.insert(pair<GT_LEXICAL_TOKEN,string>(GT_LEXICAL_TOKEN::T_BOOLTYPE, "T_BOOLTYPE"));*/
@@ -206,9 +206,6 @@ main (int argc, char **argv) {
   init();
 
   GT_LEXICAL_TOKEN token;
-  /*string lexeme;*/
-  /*lexeme.assign(yytext);*/
-
   while ((std::int32_t)(token = (GT_LEXICAL_TOKEN)yylex())) {
     if (token != GT_LEXICAL_TOKEN::T_UNKNOWN) {
       /* handle invisiable character */
