@@ -19,6 +19,8 @@
 #define SILICON_COMPILER_LEXICAL_ANALYSER_H
 
 #include "global.h"
+#include <map>
+#include <string>
 
 //
 // Class: Lexical Analyser
@@ -32,6 +34,8 @@
 //
 
 class LexicalAnalyser {
+  std::map<GT_SILICON_COMPILER::GT_LEXICAL_TOKEN, std::string> tokenString;
+
 public:
   LexicalAnalyser();
 

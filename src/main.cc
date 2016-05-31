@@ -27,7 +27,8 @@
 //       argc:  the number of parameters from CLI
 //       argv:  the pointer of parameters from CLI
 //
-int main (int argc, char **argv) {
+int
+main (int argc, char **argv) {
   LexicalAnalyser analyser;
   analyser.analyse();
 
