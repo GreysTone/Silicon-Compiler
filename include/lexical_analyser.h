@@ -35,6 +35,8 @@
 
 class LexicalAnalyser {
   std::map<GT_SILICON_COMPILER::GT_LEXICAL_TOKEN, std::string> tokenString;
+  std::int32_t currentLine;
+  std::int32_t currentChar;
 
 public:
   LexicalAnalyser();

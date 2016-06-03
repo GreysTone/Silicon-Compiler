@@ -108,6 +108,10 @@ while            { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHILE; }
 %%
 
 LexicalAnalyser::LexicalAnalyser() {
+
+  currentLine = 1; /* offset for the first line */
+  currentChar = 1; /* offset for the next token */
+
   /* Delimiter */
   tokenString[GT_LEXICAL_TOKEN::T_COMMA]          = "T_COMMA";
   tokenString[GT_LEXICAL_TOKEN::T_LCB]            = "T_LCB";
@@ -175,12 +179,17 @@ LexicalAnalyser::analyse() {
   GT_LEXICAL_TOKEN token;
   while ((std::int32_t)(token = (GT_LEXICAL_TOKEN)yylex())) {
     if (token != GT_LEXICAL_TOKEN::T_UNKNOWN) {
+      currentChar += strlen(yytext);
       /* handle invisible character */
       if (token == GT_LEXICAL_TOKEN::T_WHITESPACE || token == GT_LEXICAL_TOKEN::T_COMMENT) {
         cout << tokenString[token] << " ";
         for (int i = 0; i < strlen(yytext); ++i) {
           switch (yytext[i]) {
-            case '\n':  cout << "\\n"; break;
+            case '\n':
+              cout << "\\n";
+              ++currentLine;
+              currentChar = 1;
+              break;
             default:    cout << yytext[i];
           }
         }
@@ -190,6 +199,7 @@ LexicalAnalyser::analyse() {
       }
     } else {
       cerr << "Error: unexpected character in input" << endl;
+      cerr << "Error: detected on line:" << currentLine << " loc:" << currentChar << endl;
       exit(EXIT_FAILURE);
     }
   }

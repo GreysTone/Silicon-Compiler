@@ -205,15 +205,24 @@ int
 main (int argc, char **argv) {
   init();
 
+  std::int32_t currentLine=1; /* offset for the first line */
+  std::int32_t currentChar=1; /* offset for the next token */
+
   GT_LEXICAL_TOKEN token;
   while ((std::int32_t)(token = (GT_LEXICAL_TOKEN)yylex())) {
     if (token != GT_LEXICAL_TOKEN::T_UNKNOWN) {
+			currentChar += strlen(yytext);
       /* handle invisiable character */
       if (token == GT_LEXICAL_TOKEN::T_WHITESPACE || token == GT_LEXICAL_TOKEN::T_COMMENT) {
         cout << tokenString[token] << " ";
         for (int i = 0; i < strlen(yytext); ++i) {
           switch (yytext[i]) {
-            case '\n': cout << "\\n"; break;
+            case '\n': {
+              cout << "\\n";
+							++currentLine;
+							currentChar = 1;
+              break;
+						}
             default:
               cout << yytext[i];
           }
@@ -224,6 +233,7 @@ main (int argc, char **argv) {
       }
     } else {
       cerr << "Error: unexpected character in input" << endl;
+			cerr << "Error detected on line:" << currentLine << " pos:" << currentChar << endl;
       exit(EXIT_FAILURE);
     }
   }
