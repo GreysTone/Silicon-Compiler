@@ -199,7 +199,7 @@ LexicalAnalyser::analyse() {
       }
     } else {
       cerr << "Error: unexpected character in input" << endl;
-      cerr << "Error: detected on line:" << currentLine << " loc:" << currentChar << endl;
+      cerr << "Lexical error: line " << currentLine << ", position " << currentChar << endl;
       exit(EXIT_FAILURE);
     }
   }

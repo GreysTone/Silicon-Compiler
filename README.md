@@ -16,4 +16,22 @@
 * ```./tools/decaflex/answer/decaflex.lex```
     * Flex uses *'register' storage class* which is deprecated in C++11 standard. To avoid this issue, add ```-Wno-deprecated-register``` option in **makefile**.
 
+## Error Specification
+* T_ERR_LITCON_UNWIDTH
+    * Literal constant has unexpected width
+    * Example
+        * ```''``` (char literal has zero width)
+        * ```'ch'``` (char literal has more than one width)
+        * ```'```, ```'c``` (char literal has infinity width)
+        * ```"str...``` (string literal has infinity width)
+        * ```"str... \nstr..."``` (newline in string literal , special case)
+* T_ERR_UNKNOWN_ESCAPE
+    * Unknown escape sequence
+    * Example
+        * ```'\p'``` (```\p``` is not a valid escape sequence)
+        * ```"\p"``` (```\p``` is not a valid escape sequence)
+
+* T_ERR_UNKNOWN
+    * Other unrecognized lexical error
+
 ## Features

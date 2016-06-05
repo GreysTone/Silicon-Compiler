@@ -83,7 +83,16 @@ enum class GT_LEXICAL_TOKEN : std::int32_t {
   T_IDENTIFIER             , // identifier (see section on Identifiers)
   T_WHITESPACE             , // whitespace (see section on Whitespace)
   T_COMMENT                , // comment
+	T_ERR_UNKNOWN						 , // err_unknown
+	T_ERR_UNKNOWN_ESCAPE		 , // err_unknown_escape_sequence
+	T_ERR_LITCON_UNWIDTH		 , // err_literal_constant_unexpected_width
   T_UNKNOWN        = 0xA200
+};
+
+enum class GT_LEXICAL_ERROR : std::int32_t {
+	ERR_UNKNOWN						 , // err_unknown
+	ERR_UNKNOWN_ESCAPE		 , // err_unknown_escape_sequence
+	ERR_LITCON_UNWIDTH		 , // err_literal_constant_unexpected_width
 };
 } // namespace GT_SILICON_COMPILER
 

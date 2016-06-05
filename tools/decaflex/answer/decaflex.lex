@@ -28,6 +28,9 @@
 using namespace std;
 using namespace GT_SILICON_COMPILER;
 
+
+GT_LEXICAL_TOKEN lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_UNKNOWN;
+
 %}
 
 /* RegExp definitions (LEX) */
@@ -51,8 +54,15 @@ dec_lit     {digit}+
 hex_lit     0[xX]{hexDigit}+
 int_lit     ({hex_lit}|{dec_lit})
 escaped     \\[nrtvfab\\'\"]
+unescap		[\x7-\x9\xb-\xd\x20\x21\x23-\x26\x28-\x5b\x5d-\x60\x63-\x65\x67-\x6d\x6f-\x71\x73\x75\x77-\x7e]
 char_lit    '({noSglChar}|{escaped})'
 string_lit  \"({noDblChar}|{escaped})*\"
+char_err_width ''
+char_err_mwidth '{noSglChar}{noSglChar}+'
+char_err_iwidth '
+strs_err_iwidth \"({noDblChar}|{escaped})*\n
+char_err_escape '\\{unescap}
+strs_err_escape \"({noDblChar}|{escaped})*\\{unescap}
 
 /* Pattern definitions for all tokens (LEX) */
 %%
@@ -110,13 +120,17 @@ while            { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHILE; }
 {identifier}     { return (std::int32_t)GT_LEXICAL_TOKEN::T_IDENTIFIER; }
 {whitespace}     { return (std::int32_t)GT_LEXICAL_TOKEN::T_WHITESPACE; }
 {comment}        { return (std::int32_t)GT_LEXICAL_TOKEN::T_COMMENT; }
-.                { return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{char_err_width} { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_LITCON_UNWIDTH; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{char_err_mwidth} { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_LITCON_UNWIDTH; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{strs_err_iwidth} { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_LITCON_UNWIDTH; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{char_err_escape} { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_UNKNOWN_ESCAPE; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{strs_err_escape} { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_UNKNOWN_ESCAPE; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
+{char_err_iwidth} { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_LITCON_UNWIDTH; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN;}
+.                { lexicalErrorFlag = GT_LEXICAL_TOKEN::T_ERR_UNKNOWN; return (std::int32_t)GT_LEXICAL_TOKEN::T_UNKNOWN; }
 %%
 
-/* \n          { return 10; } */
 /* adds description string for output */
 map<GT_LEXICAL_TOKEN, string> tokenString;
-/*tokenString.insert(pair<GT_LEXICAL_TOKEN,string>(GT_LEXICAL_TOKEN::T_BOOLTYPE, "T_BOOLTYPE"));*/
 
 /*
 // Function: init
@@ -189,6 +203,11 @@ init () {
   tokenString[GT_LEXICAL_TOKEN::T_WHITESPACE]     = "T_WHITESPACE";
   tokenString[GT_LEXICAL_TOKEN::T_COMMENT]        = "T_COMMENT";
   tokenString[GT_LEXICAL_TOKEN::T_UNKNOWN]        = "T_UNKNOWN";
+
+	/* Error */
+	tokenString[GT_LEXICAL_TOKEN::T_ERR_UNKNOWN]		= "Error: unexpected character in input";
+	tokenString[GT_LEXICAL_TOKEN::T_ERR_UNKNOWN_ESCAPE]	= "Error: unknown escape sequence";
+	tokenString[GT_LEXICAL_TOKEN::T_ERR_LITCON_UNWIDTH]	= "Error: literal constant has unexpected width";
 }
 
 /*
@@ -220,7 +239,7 @@ main (int argc, char **argv) {
             case '\n': {
               cout << "\\n";
 							++currentLine;
-							currentChar = 1;
+							currentChar = strlen(yytext) - i;
               break;
 						}
             default:
@@ -232,8 +251,8 @@ main (int argc, char **argv) {
         cout << tokenString[token] << " " << yytext << endl;
       }
     } else {
-      cerr << "Error: unexpected character in input" << endl;
-			cerr << "Error detected on line:" << currentLine << " pos:" << currentChar << endl;
+      cerr << tokenString[lexicalErrorFlag] << endl;
+			cerr << "Lexical error: line " << currentLine << ", position " << currentChar << endl;
       exit(EXIT_FAILURE);
     }
   }
