@@ -188,7 +188,7 @@ LexicalAnalyser::analyse() {
             case '\n':
               cout << "\\n";
               ++currentLine;
-              currentChar = 1;
+              currentChar = strlen(yytext) - i;
               break;
             default:    cout << yytext[i];
           }
