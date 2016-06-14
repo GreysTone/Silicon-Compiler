@@ -23,7 +23,7 @@ $(cpptargets): %: %.y
 	bison -b $@ -d $<
 	$(mv) $@.tab.c $@.tab.cc
 	flex -o$@.lex.cc $@.lex
-	g++ -o $(bindir)/$@ $@.tab.cc $@.lex.cc -l$(yacclib) -l$(lexlib) -lm
+	g++ -o $(bindir)/$@ $@.tab.cc $@.lex.cc -l$(yacclib) -l$(lexlib) -lm -std=c++11 -Wno-deprecated-register
 	$(rm) $@.tab.h $@.tab.cc $@.lex.cc
 
 clean:

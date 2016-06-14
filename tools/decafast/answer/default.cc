@@ -29,12 +29,12 @@ string getString(decafAST *d) {
 template <class T>
 string commaList(list<T> vec) {
     string s("");
-    for (typename list<T>::iterator i = vec.begin(); i != vec.end(); i++) { 
-        s = s + (s.empty() ? string("") : string(",")) + (*i)->str(); 
-    }   
+    for (typename list<T>::iterator i = vec.begin(); i != vec.end(); i++) {
+        s = s + (s.empty() ? string("") : string(",")) + (*i)->str();
+    }
     if (s.empty()) {
         s = string("None");
-    }   
+    }
     return s;
 }
 
@@ -44,7 +44,7 @@ class decafStmtList : public decafAST {
 public:
 	decafStmtList() {}
 	~decafStmtList() {
-		for (list<decafAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) { 
+		for (list<decafAST *>::iterator i = stmts.begin(); i != stmts.end(); i++) {
 			delete *i;
 		}
 	}
@@ -59,13 +59,13 @@ class PackageAST : public decafAST {
 	decafStmtList *FieldDeclList;
 	decafStmtList *MethodDeclList;
 public:
-	PackageAST(string name, decafStmtList *fieldlist, decafStmtList *methodlist) 
+	PackageAST(string name, decafStmtList *fieldlist, decafStmtList *methodlist)
 		: Name(name), FieldDeclList(fieldlist), MethodDeclList(methodlist) {}
-	~PackageAST() { 
+	~PackageAST() {
 		if (FieldDeclList != NULL) { delete FieldDeclList; }
 		if (MethodDeclList != NULL) { delete MethodDeclList; }
 	}
-	string str() { 
+	string str() {
 		return string("Package") + "(" + Name + "," + getString(FieldDeclList) + "," + getString(MethodDeclList) + ")";
 	}
 };
@@ -76,11 +76,10 @@ class ProgramAST : public decafAST {
 	PackageAST *PackageDef;
 public:
 	ProgramAST(decafStmtList *externs, PackageAST *c) : ExternList(externs), PackageDef(c) {}
-	~ProgramAST() { 
-		if (ExternList != NULL) { delete ExternList; } 
+	~ProgramAST() {
+		if (ExternList != NULL) { delete ExternList; }
 		if (PackageDef != NULL) { delete PackageDef; }
 	}
 	string str() { return string("Program") + "(" + getString(ExternList) + "," + getString(PackageDef) + ")"; }
 };
-
 
