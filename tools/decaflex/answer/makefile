@@ -18,8 +18,9 @@ $(cpptargets): %: %.lex
 	@echo "compiling cpp lex file:" $<
 	@echo "output file:" $@
 	flex -o$@.cc $<
-	g++ -o $(bindir)/$@ $@.cc -l$(lexlib) -std=c++11  -Wno-deprecated-register
+	g++ -o $(bindir)/$@ $@.cc -l$(lexlib)
 	$(rm) $@.cc
 
 clean:
 	$(rm) $(targets) $(cpptargets)
+

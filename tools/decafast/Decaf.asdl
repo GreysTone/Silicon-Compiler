@@ -70,14 +70,13 @@ module Decaf
         | UnaryExpr(unary_operator op, expr value)
 
     rvalue = VariableExpr(identifier name)
-        | ArrayLocExpr(identifier name, expr index, expr value)
+        | ArrayLocExpr(identifier name, expr index)
 
     bool = True | False
 
     binary_operator = Plus | Minus | Mult | Div | Leftshift | Rightshift | Mod | Lt | Gt | Leq | Geq | Eq | Neq | And | Or
 
     unary_operator = UnaryMinus | Not
-
 }
 
 -- References

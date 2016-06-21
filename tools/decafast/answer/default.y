@@ -33,7 +33,8 @@ using namespace std;
 
 start: program
 
-program: extern_list decafpackage
+program: 
+  extern_list decafpackage
     { 
         ProgramAST *prog = new ProgramAST((decafStmtList *)$1, (PackageAST *)$2); 
 		if (printAST) {
@@ -46,7 +47,8 @@ extern_list: /* extern_list can be empty */
     { decafStmtList *slist = new decafStmtList(); $$ = slist; }
     ;
 
-decafpackage: T_PACKAGE T_ID T_LCB T_RCB
+decafpackage:
+    T_PACKAGE T_ID T_LCB T_RCB
     { $$ = new PackageAST(*$2, new decafStmtList(), new decafStmtList()); delete $2; }
     ;
 
