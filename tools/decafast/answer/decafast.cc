@@ -110,6 +110,7 @@ class ConstantAST : public decafAST {
 public:
   ConstantAST(decafType t, string d) : type(t), data(d) {}
   ~ConstantAST() {}
+
   string str() {
     string output;
     switch (type) {
@@ -205,7 +206,7 @@ class IdTypeComp : public decafAST {
 public:
   IdTypeComp(string n, decafAST *t) : name(n), type(t) {}
   ~IdTypeComp() {
-    if(type) delete type;
+    //if(type) delete type;
   }
   string str() {
     return "VarDef(" + name + "," + type->str() + ")";
@@ -225,7 +226,10 @@ public:
     if (VarDefList != NULL) { delete VarDefList; }
   }
   string str() {
-    return string("ExternFunction") + "(" + Name + "," + Type->str() + ",VarDef(" + getString(VarDefList) + "))";
+    if(VarDefList->size())
+      return string("ExternFunction") + "(" + Name + "," + Type->str() + ",VarDef(" + getString(VarDefList) + "))";
+    else
+      return string("ExternFunction") + "(" + Name + "," + Type->str() + "," + getString(VarDefList) + ")";
   }
 };
 

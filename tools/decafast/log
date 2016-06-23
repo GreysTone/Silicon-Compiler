@@ -138,12 +138,7 @@ INFO:root:dev/charvals-8.out Correct!
 INFO:root:Checking dev/methodcall1.out
 INFO:root:dev/methodcall1.out Correct!
 INFO:root:Checking dev/catalan.out
-INFO:root:Diff between reference and your output for dev/catalan.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_int,VoidType,VarDef(IntType)),ExternFunction(read_int,IntType,None),Package(Catalan,None,Method(main,VoidType,None,MethodBlock(None,MethodCall(print_int,MethodCall(cat,MethodCall(read_int,None))))),Method(fact,IntType,VarDef(n,IntType),MethodBlock(None,IfStmt(BinaryExpr(Eq,VariableExpr(n),NumberExpr(1)),Block(None,ReturnStmt(NumberExpr(1))),Block(None,ReturnStmt(BinaryExpr(Mult,VariableExpr(n),MethodCall(fact,BinaryExpr(Minus,VariableExpr(n),NumberExpr(1))))))))),Method(choose,IntType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Div,MethodCall(fact,VariableExpr(a)),BinaryExpr(Mult,MethodCall(fact,VariableExpr(b)),MethodCall(fact,BinaryExpr(Minus,VariableExpr(a),VariableExpr(b)))))))),Method(cat,IntType,VarDef(n,IntType),MethodBlock(None,ReturnStmt(BinaryExpr(Div,MethodCall(choose,BinaryExpr(Mult,NumberExpr(2),VariableExpr(n)),VariableExpr(n)),BinaryExpr(Plus,VariableExpr(n),NumberExpr(1))))))))
+INFO:root:dev/catalan.out Correct!
 INFO:root:Checking dev/methodcall2.out
 INFO:root:dev/methodcall2.out Correct!
 INFO:root:Checking dev/4.ret
@@ -229,12 +224,7 @@ INFO:root:dev/expr-testfile-0.out Correct!
 INFO:root:Checking dev/charexpr-3.out
 INFO:root:dev/charexpr-3.out Correct!
 INFO:root:Checking dev/gcd.out
-INFO:root:Diff between reference and your output for dev/gcd.out
-INFO:root:
---- reference
-+++ your-output
-@@ -1 +0,0 @@
--Program(ExternFunction(print_int,VoidType,VarDef(IntType)),Package(GreatestCommonDivisor,AssignGlobalVar(a,IntType,NumberExpr(10)),AssignGlobalVar(b,IntType,NumberExpr(20)),Method(main,IntType,None,MethodBlock(VarDef(x,IntType),VarDef(y,IntType),VarDef(z,IntType),AssignVar(x,VariableExpr(a)),AssignVar(y,VariableExpr(b)),AssignVar(z,MethodCall(gcd,VariableExpr(x),VariableExpr(y))),MethodCall(print_int,VariableExpr(z)))),Method(gcd,IntType,VarDef(a,IntType),VarDef(b,IntType),MethodBlock(None,IfStmt(BinaryExpr(Eq,VariableExpr(b),NumberExpr(0)),Block(None,ReturnStmt(VariableExpr(a))),Block(None,ReturnStmt(MethodCall(gcd,VariableExpr(b),BinaryExpr(Mod,VariableExpr(a),VariableExpr(b))))))))))
+INFO:root:dev/gcd.out Correct!
 INFO:root:Checking dev/assignmismatch-intofchar-ok.out
 INFO:root:dev/assignmismatch-intofchar-ok.out Correct!
 INFO:root:Checking dev/method0-prev.ret

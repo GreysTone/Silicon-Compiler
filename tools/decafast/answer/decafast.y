@@ -1,5 +1,4 @@
 %{
-// #include "global.h"
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -15,67 +14,23 @@ bool printAST = true;
 #include "decafast.cc"
 
 using namespace std;
-/*using namespace GT_SILICON_COMPILER::GT_LEXICAL_TOKEN;*/
 
 %}
 
 %union{
     class decafAST *ast;
-    /*class decafStmtList *list;*/
     std::string *sval;
-    /*std::int64_t *ival;*/
  }
 
-%token T_COMMA
-%token T_LPAREN
-%token T_LCB
-%token T_LSB
-%token T_RCB
-%token T_RPAREN
-%token T_RSB
-%token T_SEMICOLON
-%token T_AND
-%token T_ASSIGN
-%token T_DIV
-%token T_DOT
-%token T_EQ
-%token T_GEQ
-%token T_GT
-%token T_LEFTSHIFT
-%token T_LEQ
-%token T_LT
-%token T_MINUS
-%token T_MOD
-%token T_MULT
-%token T_NEQ
-%token T_NOT
-%token T_OR
-%token T_PLUS
-%token T_RIGHTSHIFT
-%token T_BOOLTYPE
-%token T_BREAK
-%token T_CONTINUE
-%token T_ELSE
-%token T_EXTERN
-%token T_FALSE
-%token T_FOR
-%token T_FUNC
-%token T_IF
-%token T_INTTYPE
-%token T_NULL
-%token T_PACKAGE
-%token T_RETURN
-%token T_STRINGTYPE
-%token T_TRUE
-%token T_VAR
-%token T_VOID
-%token T_WHILE
+%token T_COMMA T_LPAREN T_LCB T_LSB T_RCB T_RPAREN T_RSB T_SEMICOLON
+%token T_AND T_ASSIGN T_DIV T_DOT T_EQ T_GEQ T_GT T_LEFTSHIFT T_LEQ T_LT T_MINUS T_MOD T_MULT T_NEQ T_NOT T_OR T_PLUS T_RIGHTSHIFT
+%token T_BOOLTYPE T_BREAK T_CONTINUE T_ELSE T_EXTERN T_FALSE T_FOR T_FUNC T_IF T_INTTYPE T_NULL T_PACKAGE T_RETURN T_STRINGTYPE T_TRUE T_VAR T_VOID T_WHILE
 %token <sval> T_CHARCONSTANT
 %token <sval> T_INTCONSTANT
 %token <sval> T_STRINGCONSTANT
 %token <sval> T_IDENTIFIER
 /*%token T_WHITESPACE*/
-%token T_COMMENT
+/*%token T_COMMENT*/
 
 %type <ast> decafpackage
 %type <ast> field_decl_0list field_decl method_decl_0list method_decl extern_0list
@@ -89,8 +44,6 @@ using namespace std;
 %type <ast> var_decl statement
 %type <ast> expr
 %type <ast> method_arg_1commalist method_arg assign_1list assign method_call
-/*%type <ast> unary_operator unary_not unary_minus
-%type <ast> binary_operator arithmetic_operator boolean_operator*/
 
 %left T_OR
 %left T_AND
@@ -198,6 +151,7 @@ field_decl:
     | T_VAR identifier_1commalist type T_ASSIGN constant T_SEMICOLON {
         IdAST *idList = (IdAST *)$2;
         decafStmtList *slist = new decafStmtList;
+        if((*idList).idlist.size() > 1) return 1;
         for(auto it = (*idList).idlist.begin(); it != (*idList).idlist.end(); ++it) {
           FieldDeclAST *decl = new FieldDeclAST((*it), $3, (ConstantAST *)$5, true);
           slist->push_back(decl);
@@ -283,10 +237,7 @@ method_arg_1commalist:
 
 method_arg:
       expr { $$ = $1; }
-    | T_STRINGCONSTANT {
-        $$ = new ConstantAST(decafType::stringType, *$1);
-        delete $1;
-      }
+    | T_STRINGCONSTANT { $$ = new ConstantAST(decafType::stringType, *$1); delete $1; }
     ;
 
 statement: 
@@ -318,21 +269,11 @@ statement:
         ReturnStmtAST *rets = new ReturnStmtAST($3);
         $$ = new StmtAST(rets, decafStmt::S_RETURN)
       }
-    | T_BREAK T_SEMICOLON {
-        $$ = new StmtAST(NULL, decafStmt::S_BREAK);
-      }
-    | T_CONTINUE T_SEMICOLON {
-        $$ = new StmtAST(NULL, decafStmt::S_CONTINUE);
-      }
-    | assign T_SEMICOLON {
-        $$ = new StmtAST($1, decafStmt::S_ASSIGN);
-      }
-    | method_call T_SEMICOLON {
-        $$ = new StmtAST($1, decafStmt::S_METHOD_CALL);
-      }
-    | block { 
-        $$ = new StmtAST($1, decafStmt::S_BLOCK); 
-      }
+    | T_BREAK T_SEMICOLON { $$ = new StmtAST(NULL, decafStmt::S_BREAK); }
+    | T_CONTINUE T_SEMICOLON { $$ = new StmtAST(NULL, decafStmt::S_CONTINUE); }
+    | assign T_SEMICOLON { $$ = new StmtAST($1, decafStmt::S_ASSIGN); }
+    | method_call T_SEMICOLON { $$ = new StmtAST($1, decafStmt::S_METHOD_CALL); }
+    | block { $$ = new StmtAST($1, decafStmt::S_BLOCK); }
     ;
 
 block:
@@ -391,10 +332,7 @@ identifier_1commalist:
         $$ = idn;
         delete $3;
       }
-    | T_IDENTIFIER {
-        $$ = new IdAST(*$1);
-        delete $1;
-      }
+    | T_IDENTIFIER { $$ = new IdAST(*$1); delete $1; }
     ;
 
 assign_1list:
@@ -412,14 +350,8 @@ assign_1list:
     ;
 
 assign:
-      T_IDENTIFIER T_ASSIGN expr {
-        $$ = new AssignAST(*$1, $3);
-        delete $1;
-      }
-    | T_IDENTIFIER T_LSB expr T_RSB T_ASSIGN expr {
-        $$ = new AssignAST(*$1, $6, $3);
-        delete $1;
-      }
+      T_IDENTIFIER T_ASSIGN expr { $$ = new AssignAST(*$1, $3); delete $1; }
+    | T_IDENTIFIER T_LSB expr T_RSB T_ASSIGN expr { $$ = new AssignAST(*$1, $6, $3); delete $1; }
     ;
 
 /* (embedded in assign)
@@ -453,107 +385,10 @@ expr:
     | expr T_AND expr { $$ = new BinaryOpAST(decafOperator::AND, $1, $3); }
     | expr T_OR expr { $$ = new BinaryOpAST(decafOperator::OR, $1, $3); }
     ;
-/*
-unary_operator:
-      unary_not { $$ = $1; }
-    | unary_minus expr { $$ = $1; }
-    ;
 
-unary_not: 
-      T_NOT expr {
-    ;
-/*
-boolean_operator: 
-      expr T_EQ expr {
-        $$ = new BinaryOpAST(decafOperator::EQ, $1, $3);
-      } 
-    | expr T_NEQ expr {
-        $$ = new BinaryOpAST(decafOperator::NEQ, $1, $3);
-      } 
-    | expr T_LT expr {
-        $$ = new BinaryOpAST(decafOperator::LT, $1, $3);
-      }
-    | expr T_LEQ expr {
-        $$ = new BinaryOpAST(decafOperator::LEQ, $1, $3);
-    ;
-
-unary_operator:
-      unary_not { $$ = $1; }
-    | unary_minus expr { $$ = $1; }
-    ;
-
-unary_not: 
-      T_NOT expr {
-        $$ = new UnaryOpAST(decafOperator::NOT, $2);
-      }
-    ;
-
-unary_minus:
-      T_MINUS expr %prec UM{
-        $$ = new UnaryOpAST(decafOperator::UMINUS, $2);
-      }
-    ;
-*/
-/*
-binary_operator:
-      arithmetic_operator { $$ = $1; }
-    | boolean_operator { $$ = $1; }
-    ;
-
-arithmetic_operator:
-      expr T_PLUS expr {
-        $$ = new BinaryOpAST(decafOperator::PLUS, $1, $3);
-      }
-    | expr T_MINUS expr {
-        $$ = new BinaryOpAST(decafOperator::BMINUS, $1, $3);
-      }
-    | expr T_MULT expr {
-        $$ = new BinaryOpAST(decafOperator::MULT, $1, $3);
-      }
-    | expr T_DIV expr {
-        $$ = new BinaryOpAST(decafOperator::DIV, $1, $3);
-      }
-    | expr T_LEFTSHIFT expr {
-        $$ = new BinaryOpAST(decafOperator::LSHIFT, $1, $3);
-      }
-    | expr T_RIGHTSHIFT expr {
-        $$ = new BinaryOpAST(decafOperator::RSHIFT, $1, $3);
-      }
-    | expr T_MOD expr {
-        $$ = new BinaryOpAST(decafOperator::MOD, $1, $3);
-      }
-    ;
-
-boolean_operator: 
-      expr T_EQ expr {
-        $$ = new BinaryOpAST(decafOperator::EQ, $1, $3);
-      } 
-    | expr T_NEQ expr {
-        $$ = new BinaryOpAST(decafOperator::NEQ, $1, $3);
-      } 
-    | expr T_LT expr {
-        $$ = new BinaryOpAST(decafOperator::LT, $1, $3);
-      }
-    | expr T_LEQ expr {
-        $$ = new BinaryOpAST(decafOperator::LEQ, $1, $3);
-      }
-    | expr T_GT expr {
-        $$ = new BinaryOpAST(decafOperator::GT, $1, $3);
-      }
-    | expr T_GEQ expr {
-        $$ = new BinaryOpAST(decafOperator::GEQ, $1, $3);
-      }
-    | expr T_AND expr {
-        $$ = new BinaryOpAST(decafOperator::AND, $1, $3);
-      }
-    | expr T_OR expr {
-        $$ = new BinaryOpAST(decafOperator::OR, $1, $3);
-      }
-    ;
-*/
 extern_type:
       T_STRINGTYPE { $$ = new AtomType("StringType", decafType::stringType); }
-    | method_type { $$ = $1; }
+    | type { $$ = $1; }
     ;
 
 method_type:
@@ -571,28 +406,15 @@ type:
     ;
 
 constant: 
-      T_INTCONSTANT { 
-        $$ = new ConstantAST(decafType::integerType, *$1); 
-        delete $1;
-      }
-    | T_CHARCONSTANT { 
-        $$ = new ConstantAST(decafType::charType, *$1);
-        delete $1;
-      }
-    | T_STRINGCONSTANT {
-        $$ = new ConstantAST(decafType::stringType, *$1);
-        delete $1;
-      }
+      T_INTCONSTANT { $$ = new ConstantAST(decafType::integerType, *$1); delete $1; }
+    | T_CHARCONSTANT { $$ = new ConstantAST(decafType::charType, *$1); delete $1; }
+    | T_STRINGCONSTANT { $$ = new ConstantAST(decafType::stringType, *$1); delete $1; }
     | bool_constant { $$ = $1; }
     ;
 
 bool_constant: 
-      T_TRUE {
-        $$ = new ConstantAST(decafType::boolType, "True"); 
-      }
-    | T_FALSE {
-        $$ = new ConstantAST(decafType::boolType, "False"); 
-      }
+      T_TRUE { $$ = new ConstantAST(decafType::boolType, "True"); }
+    | T_FALSE { $$ = new ConstantAST(decafType::boolType, "False"); }
     ;
 %%
 
